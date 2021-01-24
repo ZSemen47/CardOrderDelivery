@@ -4,12 +4,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class DataGenerator {
-    private LocalDate time = LocalDate.now();
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private static LocalDate time = LocalDate.now();
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-    public String calculatedData(int Days) {
+    public static String calculatedData(int Days) {
         LocalDate newDate = time.plusDays(Days);
         return formatter.format(newDate);
     }
-
 }
