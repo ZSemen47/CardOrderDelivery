@@ -5,6 +5,8 @@ import com.codeborne.selenide.Selectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static ru.netology.DataGenerator.calculatedData;
@@ -15,6 +17,7 @@ class CardOrderDeliveryTest {
     void openLink() {
         open("http://localhost:9999/");
     }
+    private String dateForTest = calculatedData(3);
 
     @Test
     void shouldAcceptOrder() {
@@ -25,8 +28,10 @@ class CardOrderDeliveryTest {
         $("[data-test-id='phone'] input").setValue("+88005553535");
         $(".checkbox__box").click();
         $(Selectors.byText("Забронировать")).click();
-        $(Selectors.withText("Успешно!")).waitUntil(Condition.visible, 15000);
-        $(Selectors.withText("Встречно успешно забронирована на 27.01.2021"));
+        $("[data-test-id='notification'] .notification__title").waitUntil(Condition.visible, 15000)
+                .shouldHave(Condition.exactText("Успешно!"));
+        $("[data-test-id='notification'] .notification__content")
+                .shouldHave(Condition.exactText("Встреча успешно забронирована на " + dateForTest));
     }
 
     @Test
